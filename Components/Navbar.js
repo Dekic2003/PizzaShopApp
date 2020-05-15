@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,Dimensions,StatusBar,StyleSheet} from 'react-native';
+import { Text, View,Dimensions,StatusBar,StyleSheet,Image} from 'react-native';
 
 export default function Navbar() {
 
@@ -12,6 +12,7 @@ export default function Navbar() {
             backgroundColor:'white',
             justifyContent:'center',
             alignItems:'center',
+            flexDirection:'row'
 
         },
         text:{
