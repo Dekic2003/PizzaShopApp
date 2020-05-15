@@ -10,7 +10,8 @@ import {
     StyleSheet,
     Dimensions,
     FlatList,
-    ImageBackground
+    ImageBackground,
+    TouchableOpacity
 } from 'react-native';
 import axios from 'axios';
 
@@ -20,7 +21,7 @@ import Navbar from "./Components/Navbar";
 export default function App() {
 
 
-
+const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const [ response,setResponse]=useState(null);
@@ -37,7 +38,8 @@ const [ response,setResponse]=useState(null);
 
     const styles = StyleSheet.create({
         container:{
-            flex:1
+            flex:1,
+
         },
         text:{
             fontSize: 16,
@@ -57,24 +59,63 @@ const [ response,setResponse]=useState(null);
             alignItems:'center',
             borderRadius: 16,
             backgroundColor: 'pink',
-            margin:10,
+            marginTop:10,
             overflow: 'hidden',
-            width: '90%',
+            width: '95%',
             elevation:10,
+            justifyContent:'center',
+            alignContent:'center'
 
 
         },
         pizzaCard:{
             width:'100%',
             overflow:'hidden'
+        },
+        pizzaRow:{
+            flexDirection:'row'
+        },
+        pizzaName:{
+            fontFamily:'Montserrat-Bold',
+            fontSize:24,
+            textAlign: 'center'
+        },
+        pizzaNameLoad:{
+            fontFamily:'Montserrat-Bold',
+            fontSize:40,
+            textAlign: 'center'
+        },
+        pizzaIng:{
+            fontFamily:'Montserrat',
+            fontSize:12,
+            padding: 5
+        },
+        button:{
+            backgroundColor:'#FEBC40',
+            padding:15,
+            width:'80%',
+            borderRadius: 20,
+            alignItems: 'center'
+        },
+        buttonText:{
+            fontFamily:'Montserrat-Bold'
+        },
+        pizzaPrice:{
+            fontFamily:'Montserrat-Bold',
         }
+
 
 
 
     });
 
     if(response===null){
-        return <ActivityIndicator/>
+        return <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                    <Image source={require('../App/assets/pizza.png')} style={{width:'70%',height: '20%'}}/>
+                    <Text style={styles.pizzaNameLoad}>Pizza Shop</Text>
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                </View>
+
 
 
 
@@ -103,20 +144,37 @@ const [ response,setResponse]=useState(null);
                         </View>
                     })
                 */}
-                <View style={{justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
                 <FlatList
-                    data={response}
-                    renderItem={({item})=>{
-                        return <View style={styles.cardContainer}>
-                            <View style={styles.pizzaCard}>
-                                <ImageBackground source={{uri: 'https://forkfeeds.com/wp-content/uploads/2019/08/pepperoni-lovers.jpg'}} style={{width: 400,height: 200,}}>
-                                    <View style={{height: '65%'}}/>
-                                    <View style={{height:'35%',backgroundColor:'white',bottom:0,opacity:0.9,padding: 10}}>
-                                        <Text>{item.name}</Text>
 
+
+                    data={response}
+                    renderItem={({item})=> {
+                        return <View style={{alignItems: 'center'}}>
+                        <View style={styles.cardContainer}>
+                            <View style={styles.pizzaCard}>
+                                <ImageBackground source={{uri: item.img || 'https://forkfeeds.com/wp-content/uploads/2019/08/pepperoni-lovers.jpg'}} style={{width: windowWidth, height: windowHeight/2.5}}>
+                                    <View style={{height: '55%'}}/>
+                                    <View style={{height: '45%', backgroundColor: 'white', opacity: 0.8, padding: 10}}>
+                                        <Text style={styles.pizzaName}>{item.name}</Text>
+                                        <Text style={styles.pizzaIng}>Ingredients: {item.ingredients}</Text>
+
+                                        <View style={styles.pizzaRow}>
+                                            <View style={{width:'50%'}}>
+                                                <Text style={styles.pizzaPrice}>Price:{item.price}$</Text>
+                                                <Text style={styles.pizzaPrice}>Delivery:{item.delivery}</Text>
+
+
+                                            </View>
+                                            <View style={{width:'50%'}}>
+                                        <TouchableOpacity style={styles.button}>
+                                            <Text style={styles.buttonText}>Add to Cart</Text>
+                                        </TouchableOpacity>
+                                            </View>
+                                        </View>
                                     </View>
                                 </ImageBackground>
                             </View>
+                        </View>
                         </View>
                     }}
                     keyExtractor={(item, index) => index.toString()}
@@ -124,7 +182,6 @@ const [ response,setResponse]=useState(null);
 
 
                 />
-                </View>
 
     <View>
         <Text> Cart</Text>
