@@ -1,9 +1,13 @@
 import React from 'react';
-import { Text, View,Dimensions,StatusBar,StyleSheet,Image} from 'react-native';
+import { Text, View,Dimensions,StatusBar,StyleSheet,Image,TouchableOpacity} from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+
+
 
 export default function Navbar() {
 
-
+    const navigation = useNavigation();
     const windowHeight = Dimensions.get('window').height;
     const styles = StyleSheet.create({
         container:{
@@ -24,8 +28,16 @@ export default function Navbar() {
     });
 
 return(<View style={styles.container}>
-            <Text style={styles.text}>Pizza Shop</Text>
-        </View>);
+    <View style={{width:'20%'}}/>
+    <View style={{width:'60%',alignItems: 'center'}}><Text style={styles.text}>Pizza Shop</Text></View>
+    <View style={{width:'20%',alignItems: 'center'}}>
+        <TouchableOpacity style={{backgroundColor: '#A9A9A9',padding:10,borderRadius:25,alignItems: 'center',justifyContent: "center",overflow:'hidden'}} onPress={() => {navigation.navigate('Cart');
+        }}>
+            <Image source={require('../assets/Cart.png')} style={{width:25,height: 25}}/>
+        </TouchableOpacity>
+    </View>
+
+</View>);
 
 
 
