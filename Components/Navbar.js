@@ -31,7 +31,7 @@ return(<View style={styles.container}>
     <View style={{width:'20%'}}/>
     <View style={{width:'60%',alignItems: 'center'}}><Text style={styles.text}>Pizza Shop</Text></View>
     <View style={{width:'20%',alignItems: 'center'}}>
-        <TouchableOpacity style={{backgroundColor: '#A9A9A9',padding:10,borderRadius:25,alignItems: 'center',justifyContent: "center",overflow:'hidden'}} onPress={() => {navigation.navigate('Cart');
+        <TouchableOpacity style={{backgroundColor: '#A9A9A9',padding:10,borderRadius:25,alignItems: 'center',justifyContent: "center",overflow:'hidden'}} onPress={() => {navigation.navigate('Cart',cart);
         }}>
             <Image source={require('../assets/Cart.png')} style={{width:25,height: 25}}/>
         </TouchableOpacity>

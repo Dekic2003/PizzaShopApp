@@ -16,7 +16,9 @@ import {
 import axios from 'axios';
 
 
-import Navbar from "../Navbar";
+import {useNavigation} from "@react-navigation/core";
+
+
 
 export default function Home() {
 
@@ -24,8 +26,12 @@ export default function Home() {
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
 
+    const navigation = useNavigation();
+
     const [ response,setResponse]=useState(null);
     const [ refreshing,setRefreshing]=useState(false);
+    const [cart,setCart]=useState([]);
+
 
     useEffect(()=>{
 
@@ -36,6 +42,8 @@ export default function Home() {
                 }
             )
     }, []);
+
+
 
     const styles = StyleSheet.create({
         container:{
@@ -103,6 +111,19 @@ export default function Home() {
         },
         pizzaPrice:{
             fontFamily:'Montserrat-Bold',
+        },
+        navContainer:{
+            top:0,
+            height:windowHeight/12,
+            backgroundColor:'white',
+            justifyContent:'center',
+            alignItems:'center',
+            flexDirection:'row'
+
+        },
+        navText:{
+            fontSize: 32,
+            fontFamily:'Montserrat',
         }
 
 
@@ -127,7 +148,17 @@ export default function Home() {
     return(
         <View style={styles.container}>
             <StatusBar hidden={true}/>
-            <Navbar/>
+              <View style={styles.navContainer}>
+                <View style={{width:'20%'}}/>
+                <View style={{width:'60%',alignItems: 'center'}}><Text style={styles.navText}>Pizza Shop</Text></View>
+                <View style={{width:'20%',alignItems: 'center'}}>
+                    <TouchableOpacity style={{backgroundColor: '#A9A9A9',padding:10,borderRadius:25,alignItems: 'center',justifyContent: "center",overflow:'hidden'}} onPress={() => {navigation.navigate('Cart',{cart});
+                    }}>
+                        <Image source={require('../../assets/Cart.png')} style={{width:25,height: 25}}/>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
 
             <View  style={styles.helloContainer}>
                 <Text style={styles.helloText}>Hello</Text>
@@ -167,7 +198,10 @@ export default function Home() {
 
                                             </View>
                                             <View style={{width:'50%'}}>
-                                                <TouchableOpacity style={styles.button}>
+                                                <TouchableOpacity style={styles.button} onPress={()=>{
+                                                    cart.push(item);
+                                                    console.log(cart)
+                                                }}>
                                                     <Text style={styles.buttonText}>Add to Cart</Text>
                                                 </TouchableOpacity>
                                             </View>

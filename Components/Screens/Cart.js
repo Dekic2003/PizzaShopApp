@@ -15,20 +15,35 @@ import {
 } from 'react-native';
 
 
-export default function Cart() {
+export default function Cart({route,navigation}) {
 
 
-
-
-
-
+const Cart= route.params.cart;
 
 
     return(
         <View style={{flex:1}}>
-<Text>Ocee</Text>
+<FlatList
+
+    data={Cart}
+    renderItem={({item})=> {
+        return<View>
+
+            <Text>{item.name}</Text>
+
         </View>
 
+    }}
+    keyExtractor={(item, index) => index.toString()}
 
-    )
-}
+
+/>
+
+
+
+
+
+        </View>
+
+        );}
+
