@@ -32,15 +32,19 @@ export default function Home() {
     const [ refreshing,setRefreshing]=useState(false);
     const [cart,setCart]=useState([]);
 
+function get(){
+    axios.get(`https://pizzashop-api.herokuapp.com/pizza`)
+        .then(res =>
+            {
+                setResponse(res.data);
+                setRefreshing(false);
 
+            }
+        )
+}
     useEffect(()=>{
 
-        axios.get(`https://pizzashop-api.herokuapp.com/pizza`)
-            .then(res =>
-                {
-                    setResponse(res.data);
-                }
-            )
+        get();
     }, []);
 
 
@@ -213,8 +217,13 @@ export default function Home() {
                     </View>
                 }}
                 keyExtractor={(item, index) => index.toString()}
-                /*refreshing={refreshing}
-                onRefresh={()=>setRefreshing(true)}*/
+                refreshing={refreshing}
+                onRefresh={()=>{
+                    setRefreshing(true);
+                    get();
+
+
+                }}
 
 
 
