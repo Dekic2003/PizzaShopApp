@@ -117,7 +117,15 @@ const styles=StyleSheet.create({
         fontFamily:'Montserrat-Bold',
         fontSize:32,
         textAlign: 'center'
-    }
+    },
+    buttonDel:{
+        backgroundColor:'#FEBC40',
+        padding:10,
+        borderRadius: 25,
+        alignItems: 'center',
+        marginTop: 5,
+        elevation: 5
+    },
 })
 
     return(
@@ -147,17 +155,17 @@ const styles=StyleSheet.create({
                 <View style={styles.cartCard}>
 
 <View style={{width:'30%'}}>
-                    <Image source={{uri: item.img || 'https://forkfeeds.com/wp-content/uploads/2019/08/pepperoni-lovers.jpg'}} style={{width:'100%', height: windowHeight/7}}/>
+                    <Image source={{uri: item.img || 'https://forkfeeds.com/wp-content/uploads/2019/08/pepperoni-lovers.jpg'}} style={{width:'100%', height: windowHeight/6}}/>
                     </View>
                     <View style={{width:'70%',backgroundColor:'white',padding:10}}>
 
                         <Text style={styles.pizzaName}>{item.name}</Text>
                         <Text style={styles.pizzaOther}>Price:{item.price}$</Text>
                         <Text style={styles.pizzaOther}>Delivery: {item.delivery || '15 min'}</Text>
-                        <TouchableOpacity onPress={()=>{
+                        <TouchableOpacity style={styles.buttonDel} onPress={()=>{
 
                             setCart(cart.filter((i,j)=>j!==index))
-                        }}><Text>Delete</Text></TouchableOpacity>
+                        }}><Text style={styles.buttonText}>Delete</Text></TouchableOpacity>
                     </View>
 
 
