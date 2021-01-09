@@ -14,10 +14,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/core';
-import slicedToArrayLoose from '@babel/runtime/helpers/esm/slicedToArrayLoose';
 import {useSelector, useDispatch} from 'react-redux';
 import {deleteCart} from '../../state/actions/cart';
 import ACTIONS from '../../state/actions';
+import Modal from 'react-native-modal';
+import LottieView from 'lottie-react-native';
+import {eraseCart} from '../../state/actions/cart';
 
 export default function Cart({navigation}) {
   const windowWidth = Dimensions.get('window').width;
@@ -26,6 +28,12 @@ export default function Cart({navigation}) {
   const dispatch = useDispatch();
 
   const Cart = useSelector((state) => state.cartReducer.cart);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   useEffect(() => {
     setCart(Cart);
@@ -97,6 +105,14 @@ export default function Cart({navigation}) {
       marginTop: 20,
       elevation: 5,
     },
+    buttonYay: {
+      backgroundColor: '#FEBC40',
+      padding: 15,
+      borderRadius: 25,
+      alignItems: 'flex-end',
+      marginTop: 20,
+      elevation: 5,
+    },
     buttonText: {
       fontFamily: 'Montserrat-Bold',
     },
@@ -120,6 +136,11 @@ export default function Cart({navigation}) {
       alignItems: 'center',
       marginTop: 5,
       elevation: 5,
+    },
+    deliveryText: {
+      fontFamily: 'Montserrat-Bold',
+      textAlign: 'center',
+      fontSize: 16,
     },
   });
 
@@ -203,7 +224,44 @@ export default function Cart({navigation}) {
           height: windowHeight / 5,
         }}>
         <Text style={styles.total}>Total: {total()}$</Text>
-        <TouchableOpacity style={styles.button}>
+        <Modal isVisible={isModalVisible}>
+          <View
+            style={{
+              backgroundColor: 'white',
+              height: 400,
+              borderRadius: 16,
+              padding: 16,
+            }}>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <Text style={styles.deliveryText}>Delivery is on the way</Text>
+            </View>
+            <View style={{flex: 1, flexDirection: 'column'}}>
+              <View style={{flex: 1}}>
+                <LottieView
+                  source={require('../../assets/deliveryAnimation.json')}
+                  autoPlay
+                  loop={true}
+                  speed={1}
+                />
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                toggleModal();
+                dispatch(eraseCart(cart));
+                navigation.goBack();
+              }}>
+              <Text style={styles.buttonTxt}>Yay!</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <TouchableOpacity style={styles.button} onPress={toggleModal}>
           <Text style={styles.buttonTxt}>Order Now</Text>
         </TouchableOpacity>
       </View>

@@ -6,7 +6,17 @@ const updateCart = (item, cart) => (dispatch) => {
 };
 
 const deleteCart = (item, cart, index) => (dispatch) => {
-  const newCart = cart.splice(index, 1);
-  dispatch({type: ACTIONS.DELETE_CART_ITEM, payload: newCart});
+  if (index === 0 && cart.length === 1) {
+    const newCart = cart.splice(index, 1);
+    dispatch({type: ACTIONS.DELETE_CART_ITEM, payload: newCart});
+    dispatch({type: ACTIONS.DELETE_CART_ITEM, payload: []});
+  } else {
+    const newCart = cart.splice(index, 1);
+    dispatch({type: ACTIONS.DELETE_CART_ITEM, payload: newCart});
+  }
 };
-export {updateCart, deleteCart};
+const eraseCart = (cart) => (dispatch) => {
+  cart = [];
+  dispatch({type: ACTIONS.ERASE_CART, payload: cart});
+};
+export {updateCart, deleteCart, eraseCart};

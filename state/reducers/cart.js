@@ -15,6 +15,11 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cart: action.payload,
       };
+    case ACTIONS.ERASE_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
     default:
       return state;
   }
