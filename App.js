@@ -11,6 +11,7 @@ import {
 import Home from './Components/Screens/App/Home';
 import Cart from './Components/Screens/App/Cart';
 import SignIn from './Components/Screens/Auth/SignIn';
+import SignUp from './Components/Screens/Auth/SignUp';
 
 import store from './state/store';
 import {Provider} from 'react-redux';
@@ -23,11 +24,10 @@ function AuthStackScreens() {
     <AuthStack.Navigator
       screenOptions={{
         headerShown: false,
-        gestureDirection: 'Vertical',
-        ...TransitionPresets.SlideFromRightIOS,
-      }}
-      animation="fade">
+        ...TransitionPresets.ModalSlideFromBottomIOS,
+      }}>
       <AuthStack.Screen name="SignIn" component={SignIn} />
+      <AuthStack.Screen name="SignUp" component={SignUp} />
     </AuthStack.Navigator>
   );
 }

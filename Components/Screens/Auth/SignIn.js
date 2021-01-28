@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import Pizza from '../../../assets/pizza.jpg';
 
-const SignIn = () => {
+
+const SignIn = ({navigation}) => {
   const styles = StyleSheet.create({
     Background: {
       width: '100%',
@@ -36,18 +37,18 @@ const SignIn = () => {
       alignItems: 'center',
       marginTop: 20,
       elevation: 5,
-        borderColor:'white',
-        borderWidth:2
+      borderColor: 'white',
+      borderWidth: 2,
     },
     SUbutton: {
-        backgroundColor: 'white',
-        padding: 15,
-        borderRadius: 25,
-        alignItems: 'center',
-        marginTop: 15,
-        elevation: 5,
-        borderColor:'#FEBC40',
-        borderWidth:2
+      backgroundColor: 'white',
+      padding: 15,
+      borderRadius: 25,
+      alignItems: 'center',
+      marginTop: 15,
+      elevation: 5,
+      borderColor: '#FEBC40',
+      borderWidth: 2,
     },
     buttonTxt: {
       fontFamily: 'Montserrat-Bold',
@@ -58,6 +59,9 @@ const SignIn = () => {
       backgroundColor: 'gray',
     },
   });
+
+  const [email, enterEmail] = useState('');
+  const [passw, enterPass] = useState('');
 
   return (
     <View style={{flex: 1}}>
@@ -86,14 +90,23 @@ const SignIn = () => {
                   style={styles.Input}
                   placeholder="E-mail"
                   placeholderTextColor="gray"
+                  onChangeText={(email) => enterEmail(email)}
+                  value={email}
+                  autoCapitalize = 'none'
+                  keyboardType='email-address'
                 />
                 <TextInput
                   style={styles.Input}
                   placeholder="Password"
                   placeholderTextColor="gray"
                   secureTextEntry={true}
+                  onChangeText={(pass) => enterPass(pass)}
+                  value={passw}
+                  autoCapitalize = 'none'
                 />
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={()=>{
+                    console.log(email);
+                }}>
                   <Text style={styles.buttonTxt}>Sign In</Text>
                 </TouchableOpacity>
                 <View
@@ -115,7 +128,11 @@ const SignIn = () => {
                   </View>
                   <View style={{flex: 1, height: 2, backgroundColor: 'gray'}} />
                 </View>
-                <TouchableOpacity style={styles.SUbutton}>
+                <TouchableOpacity
+                  style={styles.SUbutton}
+                  onPress={() => {
+                    navigation.navigate('SignUp');
+                  }}>
                   <Text style={styles.buttonTxt}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
