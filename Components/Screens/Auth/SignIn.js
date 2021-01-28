@@ -11,7 +11,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Pizza from '../../../assets/pizza.jpg';
-
+import signIn from '../../../state/actions/SignIn';
+import {useDispatch} from 'react-redux';
 
 const SignIn = ({navigation}) => {
   const styles = StyleSheet.create({
@@ -61,7 +62,8 @@ const SignIn = ({navigation}) => {
   });
 
   const [email, enterEmail] = useState('');
-  const [passw, enterPass] = useState('');
+  const [pass, enterPass] = useState('');
+  const dispatch = useDispatch();
 
   return (
     <View style={{flex: 1}}>
@@ -92,8 +94,8 @@ const SignIn = ({navigation}) => {
                   placeholderTextColor="gray"
                   onChangeText={(email) => enterEmail(email)}
                   value={email}
-                  autoCapitalize = 'none'
-                  keyboardType='email-address'
+                  autoCapitalize="none"
+                  keyboardType="email-address"
                 />
                 <TextInput
                   style={styles.Input}
@@ -101,12 +103,14 @@ const SignIn = ({navigation}) => {
                   placeholderTextColor="gray"
                   secureTextEntry={true}
                   onChangeText={(pass) => enterPass(pass)}
-                  value={passw}
-                  autoCapitalize = 'none'
+                  value={pass}
+                  autoCapitalize="none"
                 />
-                <TouchableOpacity style={styles.button} onPress={()=>{
-                    console.log(email);
-                }}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    dispatch(signIn(email, pass));
+                  }}>
                   <Text style={styles.buttonTxt}>Sign In</Text>
                 </TouchableOpacity>
                 <View

@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
@@ -22,7 +23,6 @@ import {updateCart} from '../../../state/actions/cart';
 import ACTIONS from '../../../state/actions';
 
 export default function Home() {
-
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const dispatch = useDispatch();
@@ -33,15 +33,14 @@ export default function Home() {
   const [response, setResponse] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [cart, setCart] = useState([]);
+  const pizzas = useSelector((state) => state.pizzaReducer.all);
+  const loading = useSelector((state) => state.pizzaReducer.loading);
+  const error = useSelector((state) => state.pizzaReducer.error);
 
   useEffect(() => {
     dispatch(fetchPizza());
     setRefreshing(false);
   }, []);
-  const pizzas = useSelector((state) => state.pizzaReducer.all);
-  const loading = useSelector((state) => state.pizzaReducer.loading);
-  const error = useSelector((state) => state.pizzaReducer.error);
-  console.log(pizzas);
 
   const styles = StyleSheet.create({
     container: {
@@ -82,11 +81,6 @@ export default function Home() {
     pizzaName: {
       fontFamily: 'Montserrat-Bold',
       fontSize: 24,
-      textAlign: 'center',
-    },
-    pizzaNameLoad: {
-      fontFamily: 'Montserrat-Bold',
-      fontSize: 40,
       textAlign: 'center',
     },
     pizzaIng: {
@@ -133,19 +127,6 @@ export default function Home() {
       </View>
     );
   }
-  if (loading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Image
-          source={require('../../../assets/pizza.png')}
-          style={{width: '70%', height: '20%'}}
-        />
-        <Text style={styles.pizzaNameLoad}>Pizza Shop</Text>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />

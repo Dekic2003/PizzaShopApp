@@ -1,16 +1,31 @@
 import ACTIONS from '../actions';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const fetchPizza = () => (dispatch) => {
-  dispatch({type: ACTIONS.GET_PIZZA_START, payload: ''});
-  axios
-    .get('http://192.168.0.129:3000/pizza', {
-      headers: {
-          'access-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmZjYWU1ZDljMjVhMTQwMmM4NjZlZDUiLCJpYXQiOjE2MTE3NDQxNTYsImV4cCI6MTYxMTgzMDU1Nn0.tDwhNg97os7W3fc-RWMyT2eUZR-R16uoAc3DybEGEzs'
-      }})
-    .then((res) => {
-      dispatch({type: ACTIONS.GET_PIZZA_SUCCESS, payload: res.data});
-    })
-    .catch((err) => dispatch({type: ACTIONS.GET_PIZZA_ERROR, payload: err}));
+  let token = '';
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('REFRESH_TOKEN');
+      if (value !== null) {
+        token = value;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getData().then(() => {
+    dispatch({type: ACTIONS.GET_PIZZA_START, payload: ''});
+    axios
+      .get('http://192.168.0.129:3000/pizza', {
+        headers: {
+          'access-token': token,
+        },
+      })
+      .then((res) => {
+        dispatch({type: ACTIONS.GET_PIZZA_SUCCESS, payload: res.data});
+      })
+      .catch((err) => dispatch({type: ACTIONS.GET_PIZZA_ERROR, payload: err}));
+  });
 };
 export default fetchPizza;

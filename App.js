@@ -12,7 +12,8 @@ import Home from './Components/Screens/App/Home';
 import Cart from './Components/Screens/App/Cart';
 import SignIn from './Components/Screens/Auth/SignIn';
 import SignUp from './Components/Screens/Auth/SignUp';
-
+import Loading from './Components/Screens/Loading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import store from './state/store';
 import {Provider} from 'react-redux';
 
@@ -49,15 +50,35 @@ function AppStackScreens() {
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('USER');
+      if (value !== null) {
+        setUser(value);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+    useEffect(() => {
+        getUser();
+    }, []);
 
-  useEffect(() => {
-    setUser(null);
-  }, []);
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
 
   return (
     <Provider store={store}>
       <NavigationContainer>
-        {user === null ? <AuthStackScreens /> : <AppStackScreens />}
+        {isLoading ? (
+          <Loading />
+        ) : user === null ? (
+          <AuthStackScreens />
+        ) : (
+          <AppStackScreens />
+        )}
       </NavigationContainer>
     </Provider>
   );
