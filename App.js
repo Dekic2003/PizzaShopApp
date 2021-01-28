@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
@@ -8,36 +8,56 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
-import Home from './Components/Screens/Home';
-import Cart from './Components/Screens/Cart';
+import Home from './Components/Screens/App/Home';
+import Cart from './Components/Screens/App/Cart';
+import SignIn from './Components/Screens/Auth/SignIn';
 
 import store from './state/store';
 import {Provider} from 'react-redux';
 
-const Stack = createStackNavigator();
+const AppStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
-const config = {
-  animation: 'timing',
-  config: {
-    duration: 1000,
-  },
-};
+function AuthStackScreens() {
+  return (
+    <AuthStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureDirection: 'Vertical',
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+      animation="fade">
+      <AuthStack.Screen name="SignIn" component={SignIn} />
+    </AuthStack.Navigator>
+  );
+}
+function AppStackScreens() {
+  return (
+    <AppStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        gestureDirection: 'horizontal',
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+      initialRouteName="Home"
+      animation="fade">
+      <AppStack.Screen name="Home" component={Home} />
+      <AppStack.Screen name="Cart" component={Cart} />
+    </AppStack.Navigator>
+  );
+}
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(null);
+  }, []);
+
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            gestureDirection: 'horizontal',
-            ...TransitionPresets.SlideFromRightIOS,
-          }}
-          initialRouteName="Home"
-          animation="fade">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Cart" component={Cart} />
-        </Stack.Navigator>
+        {user === null ? <AuthStackScreens /> : <AppStackScreens />}
       </NavigationContainer>
     </Provider>
   );

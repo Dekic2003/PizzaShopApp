@@ -15,11 +15,11 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 import {useSelector, useDispatch} from 'react-redux';
-import {deleteCart} from '../../state/actions/cart';
-import ACTIONS from '../../state/actions';
+import {deleteCart} from '../../../state/actions/cart';
+import ACTIONS from '../../../state/actions';
 import Modal from 'react-native-modal';
 import LottieView from 'lottie-react-native';
-import {eraseCart} from '../../state/actions/cart';
+import {eraseCart} from '../../../state/actions/cart';
 
 export default function Cart({navigation}) {
   const windowWidth = Dimensions.get('window').width;
@@ -162,7 +162,7 @@ export default function Cart({navigation}) {
               navigation.goBack();
             }}>
             <Image
-              source={require('../../assets/back.png')}
+              source={require('../../../assets/back.png')}
               style={{width: 25, height: 25}}
             />
           </TouchableOpacity>
@@ -243,7 +243,7 @@ export default function Cart({navigation}) {
             <View style={{flex: 1, flexDirection: 'column'}}>
               <View style={{flex: 1}}>
                 <LottieView
-                  source={require('../../assets/deliveryAnimation.json')}
+                  source={require('../../../assets/deliveryAnimation.json')}
                   autoPlay
                   loop={true}
                   speed={1}

@@ -17,11 +17,12 @@ import axios from 'axios';
 
 import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
-import fetchPizza from '../../state/actions/pizza';
-import {updateCart} from '../../state/actions/cart';
-import ACTIONS from '../../state/actions';
+import fetchPizza from '../../../state/actions/pizza';
+import {updateCart} from '../../../state/actions/cart';
+import ACTIONS from '../../../state/actions';
 
 export default function Home() {
+
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export default function Home() {
   const pizzas = useSelector((state) => state.pizzaReducer.all);
   const loading = useSelector((state) => state.pizzaReducer.loading);
   const error = useSelector((state) => state.pizzaReducer.error);
+  console.log(pizzas);
 
   const styles = StyleSheet.create({
     container: {
@@ -123,7 +125,7 @@ export default function Home() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
-          source={require('../../assets/pizza.png')}
+          source={require('../../../assets/pizza.png')}
           style={{width: '70%', height: '20%'}}
         />
         <Text style={styles.pizzaNameLoad}>Pizza Shop</Text>
@@ -135,7 +137,7 @@ export default function Home() {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
-          source={require('../../assets/pizza.png')}
+          source={require('../../../assets/pizza.png')}
           style={{width: '70%', height: '20%'}}
         />
         <Text style={styles.pizzaNameLoad}>Pizza Shop</Text>
@@ -166,7 +168,7 @@ export default function Home() {
               navigation.navigate('Cart', {cart});
             }}>
             <Image
-              source={require('../../assets/Cart.png')}
+              source={require('../../../assets/Cart.png')}
               style={{width: 25, height: 25}}
             />
           </TouchableOpacity>
