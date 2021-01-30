@@ -13,14 +13,12 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
 import fetchPizza from '../../../state/actions/pizza';
 import {updateCart} from '../../../state/actions/cart';
-import ACTIONS from '../../../state/actions';
 
 export default function Home() {
   const windowWidth = Dimensions.get('window').width;
@@ -36,9 +34,11 @@ export default function Home() {
   const pizzas = useSelector((state) => state.pizzaReducer.all);
   const loading = useSelector((state) => state.pizzaReducer.loading);
   const error = useSelector((state) => state.pizzaReducer.error);
+  const token = useSelector((state) => state.SignInReducer.USER.refreshToken);
+
 
   useEffect(() => {
-    dispatch(fetchPizza());
+    dispatch(fetchPizza(token));
     setRefreshing(false);
   }, []);
 
@@ -229,7 +229,7 @@ export default function Home() {
         refreshing={refreshing}
         onRefresh={() => {
           setRefreshing(true);
-          dispatch(fetchPizza());
+          dispatch(fetchPizza(token));
           setRefreshing(false);
         }}
       />

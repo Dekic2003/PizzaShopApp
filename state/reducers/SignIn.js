@@ -1,7 +1,7 @@
 import ACTIONS from '../actions';
 
 let initialState = {
-  all: null,
+  USER: null,
   loading: false,
   error: null,
 };
@@ -14,14 +14,15 @@ const SignInReducer = (state = initialState, action) => {
         loading: true,
       };
     case ACTIONS.SIGN_IN_SUCCESS:
+      console.log(action.payload);
       return {
         ...initialState,
-        all: action.payload,
+        USER: action.payload,
       };
     case ACTIONS.SIGN_IN_ERROR:
       return {
         ...initialState,
-        all: action.payload,
+        error: action.payload,
       };
     default:
       return state;
