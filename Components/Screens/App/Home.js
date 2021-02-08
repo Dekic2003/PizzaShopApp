@@ -14,7 +14,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-
 import {useNavigation} from '@react-navigation/core';
 import {useDispatch, useSelector} from 'react-redux';
 import fetchPizza from '../../../state/actions/pizza';
@@ -28,14 +27,11 @@ export default function Home() {
   const navigation = useNavigation();
   const Cart = useSelector((state) => state.cartReducer.cart);
 
-  const [response, setResponse] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [cart, setCart] = useState([]);
   const pizzas = useSelector((state) => state.pizzaReducer.all);
-  const loading = useSelector((state) => state.pizzaReducer.loading);
   const error = useSelector((state) => state.pizzaReducer.error);
-  const token = useSelector((state) => state.SignInReducer.USER.refreshToken);
-
+  const token = useSelector((state) => state.AuthReducer.USER.refreshToken);
 
   useEffect(() => {
     dispatch(fetchPizza(token));
@@ -108,6 +104,7 @@ export default function Home() {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
+      elevation: 5,
     },
     navText: {
       fontSize: 32,
@@ -131,11 +128,29 @@ export default function Home() {
     <View style={styles.container}>
       <StatusBar hidden={true} />
       <View style={styles.navContainer}>
-        <View style={{width: '20%'}} />
-        <View style={{width: '60%', alignItems: 'center'}}>
+        <View style={{width: '70%', alignItems: 'center'}}>
           <Text style={styles.navText}>Pizza Shop</Text>
         </View>
-        <View style={{width: '20%', alignItems: 'center'}}>
+        <View style={{width: '15%', alignItems: 'center'}}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#A9A9A9',
+              padding: 10,
+              borderRadius: 25,
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+            onPress={() => {
+              navigation.navigate('Cart', {cart});
+            }}>
+            <Image
+              source={require('../../../assets/user.png')}
+              style={{width: 25, height: 25}}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{width: '15%', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
               backgroundColor: '#A9A9A9',

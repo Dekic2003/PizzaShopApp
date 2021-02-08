@@ -5,7 +5,7 @@ import {useSelector} from 'react-redux';
 const fetchPizza = (token) => (dispatch) => {
   dispatch({type: ACTIONS.GET_PIZZA_START, payload: ''});
   axios
-    .get('http://192.168.0.128:3000/pizza', {
+    .get('http://192.168.43.239:3000/pizza', {
       headers: {
         'access-token': token,
       },
