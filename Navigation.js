@@ -4,6 +4,7 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 
 import Home from './Components/Screens/App/Home';
 import Cart from './Components/Screens/App/Cart';
+import UserScreen from './Components/Screens/App/User';
 import SignIn from './Components/Screens/Auth/SignIn';
 import SignUp from './Components/Screens/Auth/SignUp';
 
@@ -40,6 +41,14 @@ const Navigation = () => {
                 animation: 'fade',
               }}
               component={Cart}
+            />
+            <Stack.Screen
+              name="User"
+              screenOptions={{
+                ...TransitionPresets.SlideFromRightIOS,
+                animation: 'fade',
+              }}
+              component={UserScreen}
             />
           </>
         ) : (

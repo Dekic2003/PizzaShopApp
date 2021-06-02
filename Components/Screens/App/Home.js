@@ -142,7 +142,7 @@ export default function Home() {
               overflow: 'hidden',
             }}
             onPress={() => {
-              navigation.navigate('Cart', {cart});
+              navigation.navigate('User', {cart});
             }}>
             <Image
               source={require('../../../assets/user.png')}
