@@ -4,7 +4,6 @@ import {store} from '../store';
 
 const fetchPizza = () => (dispatch) => {
   let token = store.getState().AuthReducer.accessToken;
-  console.log('Origigi ',token);
 
   axios.interceptors.request.use(
     async (config) => {
@@ -35,7 +34,6 @@ const fetchPizza = () => (dispatch) => {
           })
           .then((res) => {
             token = res.data.accessToken;
-            console.log('token',token)
             request.headers.Authorization = token;
             console.log('Update ', request);
             dispatch({
@@ -51,7 +49,6 @@ const fetchPizza = () => (dispatch) => {
   );
 
   axios.get('http://192.168.50.103:3000/pizza').then((res) => {
-    console.log('okino');
     dispatch({
       type: ACTIONS.GET_PIZZA_SUCCESS,
       payload: res.data,
