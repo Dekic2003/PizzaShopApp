@@ -13,7 +13,8 @@ import {useSelector} from 'react-redux';
 const Stack = createStackNavigator();
 
 const Navigation = () => {
-  const User = useSelector((state) => state.AuthReducer.USER);
+  const User = useSelector((state) => state.AuthReducer.User);
+  console.log(User);
 
   return (
     <NavigationContainer>

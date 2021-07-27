@@ -31,10 +31,10 @@ export default function Home() {
   const [cart, setCart] = useState([]);
   const pizzas = useSelector((state) => state.pizzaReducer.all);
   const error = useSelector((state) => state.pizzaReducer.error);
-  const token = useSelector((state) => state.AuthReducer.USER.refreshToken);
+  console.log(pizzas);
 
   useEffect(() => {
-    dispatch(fetchPizza(token));
+    dispatch(fetchPizza());
     setRefreshing(false);
   }, []);
 
@@ -244,7 +244,7 @@ export default function Home() {
         refreshing={refreshing}
         onRefresh={() => {
           setRefreshing(true);
-          dispatch(fetchPizza(token));
+          dispatch(fetchPizza());
           setRefreshing(false);
         }}
       />

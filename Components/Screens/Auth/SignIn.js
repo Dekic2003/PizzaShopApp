@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useRef} from 'react';
 import {
   View,
   Text,
@@ -64,6 +64,7 @@ const SignIn = ({navigation}) => {
   const [email, enterEmail] = useState('');
   const [pass, enterPass] = useState('');
   const dispatch = useDispatch();
+  let secondInput = useRef();
 
   return (
     <View style={{flex: 1}}>
@@ -96,6 +97,11 @@ const SignIn = ({navigation}) => {
                   value={email}
                   autoCapitalize="none"
                   keyboardType="email-address"
+                  onSubmitEditing={()=>{
+                    secondInput.current.focus();
+                  }}
+                  blurOnSubmit={false}
+                  returnKeyType='next'
                 />
                 <TextInput
                   style={styles.Input}
@@ -105,6 +111,7 @@ const SignIn = ({navigation}) => {
                   onChangeText={(pass) => enterPass(pass)}
                   value={pass}
                   autoCapitalize="none"
+                  ref={secondInput}
                 />
                 <TouchableOpacity
                   style={styles.button}

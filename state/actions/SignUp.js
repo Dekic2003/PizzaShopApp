@@ -4,7 +4,7 @@ import axios from 'axios';
 const signUp = (name, email, password) => (dispatch) => {
   dispatch({type: ACTIONS.SIGN_UP_START, payload: null});
   axios
-    .post('http://192.168.43.239:3000/register', {
+    .post('http://192.168.50.103:3000/register', {
       name: name,
       email: email,
       password: password,
