@@ -72,7 +72,7 @@ export default function Cart({navigation}) {
       marginTop: 10,
       overflow: 'hidden',
       width: '85%',
-      elevation: 20,
+      elevation: 10,
       justifyContent: 'center',
       alignContent: 'center',
       marginBottom: 10,
@@ -85,7 +85,8 @@ export default function Cart({navigation}) {
     pizzaName: {
       fontFamily: 'Montserrat-Bold',
       fontSize: 24,
-      textAlign: 'center',
+      textAlign: 'left',
+      marginBottom: 4
     },
     pizzaNameLoad: {
       fontFamily: 'Montserrat-Bold',
@@ -95,15 +96,17 @@ export default function Cart({navigation}) {
     pizzaOther: {
       fontFamily: 'Montserrat',
       fontSize: 16,
-      textAlign: 'center',
+      textAlign: 'left',
+      paddingTop:4
     },
     button: {
       backgroundColor: '#FEBC40',
       padding: 15,
-      borderRadius: 25,
+      borderTopLeftRadius: 25,
       alignItems: 'center',
       marginTop: 20,
-      elevation: 5,
+      elevation: 10,
+      width: '100%',
     },
     buttonYay: {
       backgroundColor: '#FEBC40',
@@ -119,9 +122,14 @@ export default function Cart({navigation}) {
     pizzaPrice: {
       fontFamily: 'Montserrat-Bold',
     },
-    total: {
+    totalTxt: {
+      fontFamily: 'Montserrat',
+      fontSize: 32,
+      textAlign: 'center',
+    },
+    totalNum: {
       fontFamily: 'Montserrat-Bold',
-      fontSize: 40,
+      fontSize: 32,
       textAlign: 'center',
     },
     buttonTxt: {
@@ -131,16 +139,19 @@ export default function Cart({navigation}) {
     },
     buttonDel: {
       backgroundColor: '#FEBC40',
-      padding: 10,
-      borderRadius: 25,
+      padding: 16,
+      borderTopLeftRadius: 25,
       alignItems: 'center',
-      marginTop: 5,
       elevation: 5,
     },
     deliveryText: {
       fontFamily: 'Montserrat-Bold',
       textAlign: 'center',
       fontSize: 16,
+    },
+    flatlistContainter:{
+      paddingTop:20,
+      paddingBottom:20,
     },
   });
 
@@ -151,12 +162,13 @@ export default function Cart({navigation}) {
         <View style={{width: '20%', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: '#A9A9A9',
+              backgroundColor: 'white',
               padding: 10,
               borderRadius: 25,
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              elevation:10
             }}
             onPress={() => {
               navigation.goBack();
@@ -175,6 +187,7 @@ export default function Cart({navigation}) {
 
       <FlatList
         data={cart}
+        contentContainerStyle={styles.flatlistContainter}
         renderItem={({item, index}) => {
           return (
             <View style={{alignItems: 'center'}}>
@@ -194,20 +207,25 @@ export default function Cart({navigation}) {
                     style={{
                       width: '70%',
                       backgroundColor: 'white',
-                      padding: 10,
+                      paddingTop: 10,
+                      paddingLeft: 10,
+                      paddingBottom: 0,
+                      justifyContent:'flex-end'
                     }}>
                     <Text style={styles.pizzaName}>{item.name}</Text>
                     <Text style={styles.pizzaOther}>Price:{item.price}$</Text>
                     <Text style={styles.pizzaOther}>
                       Delivery: {item.delivery || '15 min'}
                     </Text>
+                    <View style={{alignItems:'flex-end'}}>
                     <TouchableOpacity
                       style={styles.buttonDel}
                       onPress={() => {
                         dispatch(deleteCart(item, cart, index));
                       }}>
-                      <Text style={styles.buttonText}>Delete</Text>
+                      <Text style={styles.buttonText}>X</Text>
                     </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -216,14 +234,19 @@ export default function Cart({navigation}) {
         }}
         keyExtractor={(item, index) => index.toString()}
       />
-
       <View
         style={{
-          justifyContent: 'flex-start',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           height: windowHeight / 5,
+          width: '100%',
+          paddingLeft: 20,
+          paddingTop: 20,
         }}>
-        <Text style={styles.total}>Total: {total()}$</Text>
+        <View style={{flexDirection: 'row', justifyContent:'space-between',width:'100%',paddingRight:20}}>
+          <Text style={styles.totalTxt}>Total:</Text>
+          <Text style={styles.totalNum}>{total()}$</Text>
+        </View>
         <Modal isVisible={isModalVisible}>
           <View
             style={{

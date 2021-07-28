@@ -31,7 +31,6 @@ export default function Home() {
   const [cart, setCart] = useState([]);
   const pizzas = useSelector((state) => state.pizzaReducer.all);
   const error = useSelector((state) => state.pizzaReducer.error);
-  console.log(pizzas);
 
   useEffect(() => {
     dispatch(fetchPizza());
@@ -128,18 +127,19 @@ export default function Home() {
     <View style={styles.container}>
       <StatusBar hidden={true} />
       <View style={styles.navContainer}>
-        <View style={{width: '70%', alignItems: 'center'}}>
+        <View style={{width: '70%', alignItems: 'flex-start',paddingLeft:20}}>
           <Text style={styles.navText}>Pizza Shop</Text>
         </View>
         <View style={{width: '15%', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: '#A9A9A9',
+              backgroundColor: 'white',
               padding: 10,
               borderRadius: 25,
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              elevation:10
             }}
             onPress={() => {
               navigation.navigate('User', {cart});
@@ -153,12 +153,13 @@ export default function Home() {
         <View style={{width: '15%', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: '#A9A9A9',
+              backgroundColor: 'white',
               padding: 10,
               borderRadius: 25,
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              elevation:10
             }}
             onPress={() => {
               navigation.navigate('Cart', {cart});

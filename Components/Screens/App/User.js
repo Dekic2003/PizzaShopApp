@@ -20,7 +20,8 @@ const UserScreen = ({navigation}) => {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
   const avatarNum = Math.floor(Math.random()*8)+1;
-  console.log(avatarNum);
+  const user=useSelector((state)=>state.AuthReducer.User)
+  console.log(user)
   const avatar = [
     require('../../../assets/Avatars/avataaars(0).png'),
     require('../../../assets/Avatars/avataaars(1).png'),
@@ -136,12 +137,13 @@ const UserScreen = ({navigation}) => {
         <View style={{width: '20%', alignItems: 'center'}}>
           <TouchableOpacity
             style={{
-              backgroundColor: '#A9A9A9',
+              backgroundColor: 'white',
               padding: 10,
               borderRadius: 25,
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              elevation:10
             }}
             onPress={() => {
               navigation.goBack();
@@ -157,8 +159,9 @@ const UserScreen = ({navigation}) => {
         </View>
         <View style={{width: '20%'}} />
       </View>
-      <View style={{backgroundColor: 'gray',padding:5}}>
+      <View style={{backgroundColor: 'white',padding:5,justifyContent:'center',alignItems:'center'}}>
         <Image source={avatar[avatarNum]} style={{width: 200, height: 200}} />
+        <Text style={{marginTop:10,fontSize:24,fontWeight:'bold'}}> {user ? user.name : ''}</Text>
       </View>
     </View>
   );
